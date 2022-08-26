@@ -13,21 +13,21 @@ export class UserCRUD {
     constructor() {
         this.users = [];
         this.col = [];
-        this.tableContainer = document.querySelector('.table');
+        this.tableContainer = document.querySelector(".table");
         this.myURL = `http://localhost:3000`;
         this.tableEle = document.createElement("table");
         this.AddBtn = document.createElement("button");
         this.AddBtn.classList.add("create-btn");
-        this.AddBtn.addEventListener('click', () => this.addUser());
-        this.addContainer = document.querySelector('.AddContainer');
+        this.AddBtn.addEventListener("click", () => this.addUser());
+        this.addContainer = document.querySelector(".AddContainer");
         this.initialize();
     }
     initialize() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch(this.myURL + '/users');
+            const response = yield fetch(this.myURL + "/users");
             const data = yield response.json();
             for (let key in data[0]) {
-                if (this.col.indexOf(key) < 0 && (key !== "id")) {
+                if (this.col.indexOf(key) < 0 && key !== "id") {
                     this.col.push(key);
                 }
             }
@@ -51,12 +51,12 @@ export class UserCRUD {
         let tr = document.createElement("tr");
         let editBtn = document.createElement("button");
         editBtn.innerHTML = "Edit";
-        editBtn.addEventListener('click', () => this.update(user));
-        editBtn.setAttribute('class', 'edit');
+        editBtn.addEventListener("click", () => this.update(user));
+        editBtn.setAttribute("class", "edit");
         let deleteBtn = document.createElement("button");
         deleteBtn = document.createElement("button");
         deleteBtn.innerHTML = "Delete";
-        deleteBtn.addEventListener('click', () => this.delete(user));
+        deleteBtn.addEventListener("click", () => this.delete(user));
         deleteBtn.classList.add("dlt");
         tr.innerHTML = `<td id = "fname">${user.firstName}</td>
                         <td id = "middle">${user.middleName}</td>
@@ -78,11 +78,11 @@ export class UserCRUD {
         for (let cols in this.col) {
             let td = tr.insertCell(-1);
             td.contentEditable = "true";
-            td.setAttribute('id', `${this.col[cols]}`);
+            td.setAttribute("id", `${this.col[cols]}`);
             if (this.col[cols] == "role") {
                 let select = document.createElement("select");
                 select.classList.add("select");
-                select.setAttribute('id', 'select');
+                select.setAttribute("id", "select");
                 for (const i in Role) {
                     const option = document.createElement("option");
                     option.value = i;
@@ -98,7 +98,7 @@ export class UserCRUD {
             }
         }
         let submit = document.createElement("button");
-        submit.classList.add('submit');
+        submit.classList.add("submit");
         submit.innerHTML = "Submit";
         tr.append(submit);
         submit.addEventListener("click", () => {
@@ -114,38 +114,38 @@ export class UserCRUD {
                 }
             }
             user = {
-                "id": 0,
-                "firstName": tr.cells.namedItem('firstname').textContent,
-                "middleName": tr.cells.namedItem('middlename').textContent,
-                "lastName": tr.cells.namedItem('lastname').textContent,
-                "email": tr.cells.namedItem('email').textContent,
-                "phone": tr.cells.namedItem('phone').textContent,
-                "role": selectedrole,
-                "address": tr.cells.namedItem('address').textContent
+                id: 0,
+                firstName: tr.cells.namedItem("firstname").textContent,
+                middleName: tr.cells.namedItem("middlename").textContent,
+                lastName: tr.cells.namedItem("lastname").textContent,
+                email: tr.cells.namedItem("email").textContent,
+                phone: tr.cells.namedItem("phone").textContent,
+                role: selectedrole,
+                address: tr.cells.namedItem("address").textContent,
             };
             this.create(user);
         });
     }
     create(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const addURL = this.myURL + '/add';
+            const addURL = this.myURL + "/add";
             const response = yield fetch(addURL, {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify(user),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { "Content-Type": "application/json" },
             });
-            const response1 = yield fetch(this.myURL + '/users');
+            const response1 = yield fetch(this.myURL + "/users");
             const data1 = yield response1.json();
             const ob = data1[data1.length - 1];
             const newUser = {
-                "id": ob.id,
-                "firstName": ob.firstname,
-                "middleName": ob.middlename,
-                "lastName": ob.lastname,
-                "email": ob.email,
-                "phone": ob.phone,
-                "role": ob.role,
-                "address": ob.address
+                id: ob.id,
+                firstName: ob.firstname,
+                middleName: ob.middlename,
+                lastName: ob.lastname,
+                email: ob.email,
+                phone: ob.phone,
+                role: ob.role,
+                address: ob.address,
             };
             this.users.push(newUser);
             this.load();
@@ -169,7 +169,7 @@ export class UserCRUD {
                 dltbtn.contentEditable = "false";
                 let select = document.createElement("select");
                 select.classList.add("select");
-                select.setAttribute('id', 'select');
+                select.setAttribute("id", "select");
                 for (const i in Role) {
                     const option = document.createElement("option");
                     option.value = i;
@@ -204,7 +204,7 @@ export class UserCRUD {
             tr.contentEditable = "false";
             editbtn.innerHTML = "Edit";
             dltbtn.innerHTML = "Delete";
-            const updateURL = this.myURL + '/update/' + `${user.id}`;
+            const updateURL = this.myURL + "/update/" + `${user.id}`;
             user.firstName = fnameCell.textContent;
             user.middleName = middlenameCell.textContent;
             user.lastName = lastnameCell.textContent;
@@ -218,26 +218,26 @@ export class UserCRUD {
                 }
             }
             let td = document.createElement("td");
-            td.setAttribute('id', 'role-cell');
+            td.setAttribute("id", "role-cell");
             tr.children[5].replaceWith(td);
-            let roleCell = tr.cells.namedItem('role-cell');
+            let roleCell = tr.cells.namedItem("role-cell");
             roleCell.innerHTML = user.role;
             const mybody = {
-                "id": user.id,
-                "firstName": user.firstName,
-                "middleName": user.middleName,
-                "lastName": user.lastName,
-                "email": user.email,
-                "phone": user.phone,
-                "role": user.role,
-                "address": user.address
+                id: user.id,
+                firstName: user.firstName,
+                middleName: user.middleName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phone,
+                role: user.role,
+                address: user.address,
             };
             const response = yield fetch(updateURL, {
-                method: 'PUT',
+                method: "PUT",
                 body: JSON.stringify(mybody),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    "Content-Type": "application/json",
+                },
             });
         });
     }
@@ -247,10 +247,10 @@ export class UserCRUD {
             let tr = this.tableEle.children[index + 1];
             let dltbtn = tr.children[tr.children.length - 1];
             if (dltbtn.innerHTML === "Delete") {
-                const deleteURL = this.myURL + '/delete/' + `${user.id}`;
+                const deleteURL = this.myURL + "/delete/" + `${user.id}`;
                 const response = yield fetch(deleteURL, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
                 });
                 tr.remove();
                 this.users.splice(index, 1);

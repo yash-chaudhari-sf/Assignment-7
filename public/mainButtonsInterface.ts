@@ -1,4 +1,4 @@
-export interface ImainPage
+export interface MainPageButton
 {
     load():void;
     Btn : HTMLButtonElement;

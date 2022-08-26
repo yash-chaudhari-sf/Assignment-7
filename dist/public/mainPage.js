@@ -10,7 +10,7 @@ const DateTimeFormatter = (target, methodName, descriptor) => {
     descriptor.value = function (...args) {
         const result = originalMethod.apply(this, args);
         let dateContainer = document.getElementById("Date");
-        dateContainer.innerHTML += `${args[0].toLocaleString('en-US')}`;
+        dateContainer.innerHTML += `${args[0].toLocaleString("en-US")}`;
         return result;
     };
     return descriptor;
@@ -20,7 +20,7 @@ class MainPage {
         this.date = new Date();
         this.Btn = document.querySelector(".btn");
         this.userCRUD = new UserCRUD();
-        this.Btn.addEventListener('click', () => this.load());
+        this.Btn.addEventListener("click", () => this.load());
     }
     load() {
         if (this.Btn.innerHTML == "Load Data") {
